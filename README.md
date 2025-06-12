@@ -321,34 +321,55 @@ docker push ibs000/task-manager-app:latest
 ## Project Structure
 
 ```
-src/
-├── app/
-│   ├── api/
-│   │   ├── todos/
-│   │   │   ├── route.ts
-│   │   │   ├── [id]/route.ts
-│   │   │   ├── bulk/route.ts
-│   │   │   ├── export/route.ts
-│   │   │   ├── search/route.ts
-│   │   │   └── stats/route.ts
-│   │   └── ai-suggest/route.ts
-│   ├── favicon.ico
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/
-│   ├── AddTodoForm.tsx
-│   ├── BulkActions.tsx
-│   ├── Dashboard.tsx
-│   ├── FilterBar.tsx
-│   ├── ImportExport.tsx
-│   ├── KeyboardShortcuts.tsx
-│   ├── TodoItem.tsx
-│   └── TodoList.tsx
-├── lib/
-│   └── mongodb.ts
-└── models/
-    └── Todo.ts
+├── architecture-diagram.md
+├── docker-compose.yml
+├── Dockerfile
+├── MANUAL_DOCKER_COMMANDS.md
+├── reflection.txt
+├── package.json
+├── pnpm-lock.yaml
+├── README.md
+├── tsconfig.json
+├── next.config.ts
+├── tailwind.config.ts
+├── eslint.config.mjs
+├── postcss.config.mjs
+├── db/
+│   └── Dockerfile
+├── public/
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── ...
+└── src/
+    ├── app/
+    │   ├── api/
+    │   │   ├── todos/
+    │   │   │   ├── route.ts
+    │   │   │   ├── [id]/route.ts
+    │   │   │   ├── bulk/route.ts
+    │   │   │   ├── export/route.ts
+    │   │   │   ├── search/route.ts
+    │   │   │   └── stats/route.ts
+    │   │   └── ai-suggest/route.ts
+    │   ├── favicon.ico
+    │   ├── globals.css
+    │   ├── layout.tsx
+    │   └── page.tsx
+    ├── components/
+    │   ├── AddTodoForm.tsx
+    │   ├── BulkActions.tsx
+    │   ├── Dashboard.tsx
+    │   ├── FilterBar.tsx
+    │   ├── ImportExport.tsx
+    │   ├── KeyboardShortcuts.tsx
+    │   ├── TodoItem.tsx
+    │   └── TodoList.tsx
+    ├── lib/
+    │   └── mongodb.ts
+    ├── models/
+    │   └── Todo.ts
+    └── types/
+        └── task.ts
 ```
 
 ## Environment Variables
@@ -462,7 +483,3 @@ Multi-stage Docker builds with health checks and container orchestration for pro
 ## Support
 
 If you encounter any issues or have questions, please create an issue in the GitHub repository.
-
-```
-
-```
