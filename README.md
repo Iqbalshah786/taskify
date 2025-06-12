@@ -2,11 +2,59 @@
 
 A comprehensive task management application built with Next.js 15, TypeScript, and Tailwind CSS, featuring full CRUD operations, modern UI, and Docker deployment.
 
+## 🚀 Quick Start
+
+### Option 1: Run from Docker Hub (Recommended)
+
+```bash
+# Pull and run the latest image directly
+docker run -d -p 3000:3000 --name taskify ibs000/task-manager-app:latest
+
+# Access the application at http://localhost:3000
+```
+
+### Option 2: Clone and Run Locally
+
+```bash
+# Clone the repository
+git clone https://github.com/Iqbalshah786/taskify.git
+cd taskify
+
+# Install dependencies
+pnpm install
+
+# Run development server
+pnpm dev
+```
+
+### Option 3: Full Docker Setup with Database
+
+```bash
+# Clone and use Docker Compose
+git clone https://github.com/Iqbalshah786/taskify.git
+cd taskify
+docker-compose up
+```
+
+---
+
+## 🎯 What You'll Get
+
+Running this application gives you:
+
+1. **Production-Ready Task Manager** - Full-featured task management with modern UI
+2. **AI-Enhanced Productivity** - Smart suggestions to boost your productivity
+3. **Docker Mastery Example** - Learn advanced Docker concepts through real implementation
+4. **Microservices Architecture** - See how services communicate in containerized environment
+5. **One-Command Deployment** - `docker run` and you're ready to go!
+
+---
+
 ## Architecture
 
 This application follows a microservices architecture with containerized services:
 
-```mermaid
+````mermaid
 graph TB
     subgraph "Docker Environment"
         subgraph "Frontend Container"
@@ -38,32 +86,30 @@ graph TB
     classDef external fill:#fff3e0
     classDef client fill:#f3e5f5
 
-    class A,B,C,D,E container
-    class G external
-    class H client
-```
+**Microservices Architecture:**
 
-**Services:**
+- 🖥️ **Next.js Application Container**: Frontend UI + API routes for task management
+- 🗄️ **MongoDB Container**: Database with persistent volume storage
+- 🤖 **Google Gemini AI Service**: External AI service for intelligent task suggestions
+- 🌐 **Custom Docker Network**: Secure container communication
+- 💾 **Persistent Volumes**: Data survives container restarts
 
-- **Next.js Application Container**: Frontend UI + API routes for task management
-- **MongoDB Container**: Database with persistent volume storage
-- **Google Gemini AI**: External service for intelligent task suggestions
+---
 
 ## Features
 
 ✨ **Core Features:**
 
-- Create, read, update, and delete tasks
-- Mark tasks as completed/pending
-- Set due dates and categories
-- Rich task descriptions
-- Beautiful, responsive UI with Tailwind CSS
+- ✅ **Full CRUD Operations**: Create, read, update, and delete tasks with form validation
+- ✅ **Smart Task Management**: Mark tasks as completed/pending with visual indicators
+- ✅ **Rich Task Details**: Set due dates, categories, and detailed descriptions
+- ✅ **Modern UI**: Beautiful, responsive design with Tailwind CSS
 
 🤖 **AI-Powered:**
 
-- Intelligent task categorization
-- Smart due date suggestions
-- Powered by Google Gemini API
+- 🧠 **Intelligent Categorization**: AI suggests relevant categories for your tasks
+- 📅 **Smart Due Dates**: AI recommends realistic due dates based on task complexity
+- ⚡ **Powered by Google Gemini API**: State-of-the-art AI integration
 
 🔍 **Advanced Filtering & Search:**
 
@@ -110,9 +156,9 @@ Before running this application, make sure you have:
 1. **Clone the repository:**
 
    ```bash
-   git clone <your-repo-url>
-   cd task-manager
-   ```
+   git clone https://github.com/Iqbalshah786/taskify.git
+   cd taskify
+````
 
 2. **Install dependencies using pnpm:**
 
@@ -172,10 +218,11 @@ For detailed manual Docker setup without Docker Compose, see [MANUAL_DOCKER_COMM
 
 The application images are available on Docker Hub:
 
-- **Application**: `yourusername/task-manager-app:v1`
+- **Application**: `ibs000/task-manager-app:latest` and `ibs000/task-manager-app:v1.0.0`
+- **Docker Hub Repository**: [https://hub.docker.com/r/ibs000/task-manager-app](https://hub.docker.com/r/ibs000/task-manager-app)
 - **Database**: Uses official `mongo:7.0` image
 
-To use the pre-built images:
+To use the pre-built images from Docker Hub:
 
 ```bash
 # Create network and volume
@@ -189,7 +236,7 @@ docker run -d --name mongo --network app-network -v mongo-data:/data/db -p 27017
 docker run -d --name app --network app-network -p 3000:3000 \
   -e MONGODB_URI=mongodb://mongo:27017/mytodoapp \
   -e GOOGLE_GEMINI_API=your_api_key_here \
-  yourusername/task-manager-app:v1
+  ibs000/task-manager-app:latest
 ```
 
 ### Building and Pushing to Docker Hub
@@ -199,13 +246,13 @@ docker run -d --name app --network app-network -p 3000:3000 \
 docker build -t task-manager-app .
 
 # Tag for Docker Hub
-docker tag task-manager-app yourusername/task-manager-app:v1
+docker tag task-manager-app ibs000/task-manager-app:latest
 
 # Login to Docker Hub
 docker login
 
 # Push to Docker Hub
-docker push yourusername/task-manager-app:v1
+docker push ibs000/task-manager-app:latest
 ```
 
 ## API Endpoints
@@ -344,6 +391,30 @@ pnpm type-check
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🔗 Links
+
+- **GitHub Repository**: [https://github.com/Iqbalshah786/taskify](https://github.com/Iqbalshah786/taskify)
+- **Docker Hub**: [https://hub.docker.com/r/ibs000/task-manager-app](https://hub.docker.com/r/ibs000/task-manager-app)
+- **Live Demo**: Run `docker run -d -p 3000:3000 ibs000/task-manager-app:latest` and visit `http://localhost:3000`
+
+## 📸 Application Screenshots
+
+### Main Dashboard
+
+The application provides a clean, modern interface for managing tasks with real-time search and filtering capabilities.
+
+### AI-Powered Suggestions
+
+Smart task categorization and due date suggestions powered by Google Gemini API.
+
+### Docker Deployment
+
+Multi-stage Docker builds with health checks and container orchestration for production-ready deployment.
+
+---
+
+**Built with ❤️ for learning Docker microservices architecture**
 
 ## Support
 
