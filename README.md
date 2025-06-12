@@ -54,17 +54,28 @@ Running this application gives you:
 
 This application follows a microservices architecture with containerized services:
 
-````mermaid
+```mermaid
 graph TB
+    subgraph "Client Layer"
+        H[Web Browser] --> I[Modern React UI]
+        I --> J[Real-time Search & Filters]
+        I --> K[Analytics Dashboard]
+        I --> L[Bulk Operations]
+    end
+
     subgraph "Docker Environment"
-        subgraph "Frontend Container"
+        subgraph "Frontend Container (Next.js 15)"
             A[Next.js App] --> B[API Routes]
             B --> C[Task CRUD Operations]
             B --> D[AI Suggestions API]
+            B --> M[Search & Filter API]
+            B --> N[Analytics API]
+            B --> O[Bulk Operations API]
+            B --> P[Import/Export API]
         end
 
         subgraph "Database Container"
-            E[MongoDB]
+            E[MongoDB 7.0]
             F[Persistent Volume]
             E --> F
         end
@@ -72,19 +83,32 @@ graph TB
         subgraph "External Services"
             G[Google Gemini AI API]
         end
-    end
 
-    subgraph "Client"
-        H[Web Browser]
+        subgraph "Docker Infrastructure"
+            Q[Custom Network: app-network]
+            R[Health Checks]
+            S[Multi-stage Builds]
+        end
     end
 
     H --> A
     C --> E
     D --> G
+    M --> E
+    N --> E
+    O --> E
+    P --> E
 
     classDef container fill:#e1f5fe
     classDef external fill:#fff3e0
     classDef client fill:#f3e5f5
+    classDef infrastructure fill:#e8f5e8
+
+    class A,B,C,D,E,M,N,O,P container
+    class G external
+    class H,I,J,K,L client
+    class Q,R,S infrastructure
+```
 
 **Microservices Architecture:**
 
@@ -158,6 +182,8 @@ Before running this application, make sure you have:
    ```bash
    git clone https://github.com/Iqbalshah786/taskify.git
    cd taskify
+   ```
+
 ````
 
 2. **Install dependencies using pnpm:**
@@ -419,3 +445,4 @@ Multi-stage Docker builds with health checks and container orchestration for pro
 ## Support
 
 If you encounter any issues or have questions, please create an issue in the GitHub repository.
+````
