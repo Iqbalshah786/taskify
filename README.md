@@ -156,6 +156,18 @@ graph TB
 - Bulk delete operations
 - Quick select all functionality
 
+🔄 **Import/Export:**
+
+- Export tasks to JSON/CSV format
+- Import tasks from external sources
+- Data backup and migration support
+
+⌨️ **Keyboard Shortcuts:**
+
+- Quick task creation and navigation
+- Keyboard shortcuts for power users
+- Improved productivity and accessibility
+
 ## Tech Stack
 
 - **Frontend:** Next.js 15, React 19, TypeScript
@@ -183,8 +195,6 @@ Before running this application, make sure you have:
    git clone https://github.com/Iqbalshah786/taskify.git
    cd taskify
    ```
-
-````
 
 2. **Install dependencies using pnpm:**
 
@@ -298,7 +308,11 @@ docker push ibs000/task-manager-app:latest
 ### Statistics & Bulk Operations
 
 - `GET /api/todos/stats` - Get task statistics
-- `POST /api/todos/stats` - Perform bulk operations
+- `POST /api/todos/bulk` - Perform bulk operations (mark complete/incomplete, delete)
+
+### Import/Export
+
+- `GET /api/todos/export` - Export tasks to JSON/CSV format
 
 ### AI Suggestions
 
@@ -318,6 +332,7 @@ src/
 │   │   │   ├── search/route.ts
 │   │   │   └── stats/route.ts
 │   │   └── ai-suggest/route.ts
+│   ├── favicon.ico
 │   ├── globals.css
 │   ├── layout.tsx
 │   └── page.tsx
@@ -326,6 +341,8 @@ src/
 │   ├── BulkActions.tsx
 │   ├── Dashboard.tsx
 │   ├── FilterBar.tsx
+│   ├── ImportExport.tsx
+│   ├── KeyboardShortcuts.tsx
 │   ├── TodoItem.tsx
 │   └── TodoList.tsx
 ├── lib/
@@ -445,4 +462,7 @@ Multi-stage Docker builds with health checks and container orchestration for pro
 ## Support
 
 If you encounter any issues or have questions, please create an issue in the GitHub repository.
-````
+
+```
+
+```
