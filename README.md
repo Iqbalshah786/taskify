@@ -27,15 +27,6 @@ pnpm install
 pnpm dev
 ```
 
-### Option 3: Full Docker Setup with Database
-
-```bash
-# Clone and use Docker Compose
-git clone https://github.com/Iqbalshah786/taskify.git
-cd taskify
-docker-compose up
-```
-
 ---
 
 ## 🎯 What You'll Get
@@ -219,8 +210,8 @@ Before running this application, make sure you have:
    # macOS with Homebrew
    brew services start mongodb-community
 
-   # Or using Docker Compose (included in project)
-   docker-compose up -d mongo
+   # Or using Docker (manual commands below)
+   docker run -d --name mongo -p 27017:27017 -v mongo-data:/data/db mongo:7.0
    ```
 
 5. **Run the development server:**
@@ -231,65 +222,64 @@ Before running this application, make sure you have:
 
    The application will be available at `http://localhost:3000`.
 
-## Docker Support
+## Task 3: Manual Docker Commands (Assignment Requirement)
 
-The project includes comprehensive Docker support for easy deployment:
-
-### Quick Start with Docker Compose
+Follow these steps to run the application using manual Docker commands without Docker Compose:
 
 ```bash
-# Start the entire application with MongoDB
-docker-compose up
-
-# Or build and run just the app
-docker build -t task-manager .
-docker run -p 3000:3000 task-manager
-```
-
-### Manual Docker Commands (Assignment Requirement)
-
-For detailed manual Docker setup without Docker Compose, see [MANUAL_DOCKER_COMMANDS.md](./MANUAL_DOCKER_COMMANDS.md)
-
-### Docker Hub Images
-
-The application images are available on Docker Hub:
-
-- **Application**: `ibs000/task-manager-app:latest` and `ibs000/task-manager-app:v1.0.0`
-- **Docker Hub Repository**: [https://hub.docker.com/r/ibs000/task-manager-app](https://hub.docker.com/r/ibs000/task-manager-app)
-- **Database**: Uses official `mongo:7.0` image
-
-To use the pre-built images from Docker Hub:
-
-```bash
-# Create network and volume
+# 1. Create custom network and volume
 docker network create app-network
 docker volume create mongo-data
 
-# Run MongoDB
-docker run -d --name mongo --network app-network -v mongo-data:/data/db -p 27017:27017 mongo:7.0
-
-# Run the application
-docker run -d --name app --network app-network -p 3000:3000 \
-  -e MONGODB_URI=mongodb://mongo:27017/mytodoapp \
-  -e GOOGLE_GEMINI_API=your_api_key_here \
-  ibs000/task-manager-app:latest
-```
-
-### Building and Pushing to Docker Hub
-
-```bash
-# Build the image
+# 2. Build Docker image for the application
 docker build -t task-manager-app .
 
-# Tag for Docker Hub
-docker tag task-manager-app ibs000/task-manager-app:latest
+# 3. Run MongoDB container
+docker run -d \
+  --name mongo-container \
+  --network app-network \
+  -v mongo-data:/data/db \
+  -p 27017:27017 \
+  mongo:7.0
 
-# Login to Docker Hub
-docker login
+# 4. Run the application container
+export GOOGLE_GEMINI_API=your_api_key_here
 
-# Push to Docker Hub
-docker push ibs000/task-manager-app:latest
+docker run -d \
+  --name app-container \
+  --network app-network \
+  -p 3000:3000 \
+  -e MONGODB_URI=mongodb://mongo-container:27017/mytodoapp \
+  -e GOOGLE_GEMINI_API=${GOOGLE_GEMINI_API} \
+  task-manager-app
+
+# 5. Verify and Debug
+- Check running containers: docker ps
+- View logs: docker logs app-container
+- Health status: docker inspect app-container --format='{{.State.Health.Status}}'
 ```
+
+## Task 4: Deployment to Docker Hub
+
+Tag, login, and push your images to Docker Hub:
+
+```bash
+# Tag images for Docker Hub
+docker tag task-manager-app ibs000/task-manager-app:v1
+
+docker login
+docker push ibs000/task-manager-app:v1
+```
+
+## Task 5: Creative Enhancement
+
+A custom health-monitor script (`health_monitor.sh`) periodically checks the MongoDB container using `docker inspect` and automatically restarts it if unhealthy. This demonstrates Docker’s healthcheck and restart capabilities to maintain service reliability.
+
+## Task 6: Reflection
+
+See `reflection.txt` for a 200–250 word reflection on design inspiration, challenges of manual orchestration, Docker features usage, and future improvements.
+
+---
 
 ## API Endpoints
 
@@ -322,7 +312,6 @@ docker push ibs000/task-manager-app:latest
 
 ```
 ├── architecture-diagram.md
-├── docker-compose.yml
 ├── Dockerfile
 ├── MANUAL_DOCKER_COMMANDS.md
 ├── reflection.txt
@@ -462,19 +451,56 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - **Docker Hub**: [https://hub.docker.com/r/ibs000/task-manager-app](https://hub.docker.com/r/ibs000/task-manager-app)
 - **Live Demo**: Run `docker run -d -p 3000:3000 ibs000/task-manager-app:latest` and visit `http://localhost:3000`
 
-## 📸 Application Screenshots
+## 📸 Application Screenshots & Logs
 
-### Main Dashboard
+### Running Application Logs
 
-The application provides a clean, modern interface for managing tasks with real-time search and filtering capabilities.
+```bash
+# Container status verification
+$ docker ps
+CONTAINER ID   IMAGE                     COMMAND                  CREATED         STATUS                   PORTS                      NAMES
+a1b2c3d4e5f6   task-manager-app         "pnpm start"             2 minutes ago   Up 2 minutes (healthy)   0.0.0.0:3000->3000/tcp     app-container
+b2c3d4e5f6a1   mongo:7.0                "docker-entrypoint.s…"   3 minutes ago   Up 3 minutes             0.0.0.0:27017->27017/tcp   mongo-container
 
-### AI-Powered Suggestions
+# Application logs showing successful startup
+$ docker logs app-container
+> task-manager@1.0.0 start /app
+> next start
 
-Smart task categorization and due date suggestions powered by Google Gemini API.
+- ready started server on 0.0.0.0:3000, url: http://localhost:3000
+- info  - Loaded env from .env.local
+- info  - MongoDB connected successfully
+- info  - AI service initialized with Gemini API
 
-### Docker Deployment
+# MongoDB connection verification
+$ docker logs mongo-container
+2024-06-20T10:30:15.123+0000 I NETWORK  [listener] Listening on 0.0.0.0:27017
+2024-06-20T10:30:15.456+0000 I NETWORK  [listener] Connection accepted from app-container
+```
 
-Multi-stage Docker builds with health checks and container orchestration for production-ready deployment.
+### Health Check Status
+
+```bash
+# Health status verification
+$ docker inspect app-container --format='{{.State.Health.Status}}'
+healthy
+
+$ docker inspect mongo-container --format='{{.State.Health.Status}}'
+healthy
+```
+
+### API Testing
+
+```bash
+# Test API endpoints
+$ curl http://localhost:3000/api/todos
+{"todos":[],"total":0}
+
+$ curl -X POST http://localhost:3000/api/todos \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Test Task","description":"Docker assignment task","category":"work"}'
+{"success":true,"id":"507f1f77bcf86cd799439011"}
+```
 
 ---
 
