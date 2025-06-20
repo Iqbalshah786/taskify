@@ -1,6 +1,6 @@
 # Manual Docker Commands for Task Manager
 
-This document provides the manual Docker commands required by the assignment to run the application without Docker Compose.
+This document provides the manual Docker commands required to run the application without Docker Compose.
 
 ## Step 1: Create Custom Network
 
