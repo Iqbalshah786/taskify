@@ -6,12 +6,45 @@ A comprehensive task management application built with Next.js 15, TypeScript, a
 
 ### Option 1: Run from Docker Hub (Recommended)
 
+````bash
+# Pul## Task 5: Creative Enhancement
+
+**Health Monitoring System**: A custom health-monitor script (`health_monitor.sh`) that demonstrates Docker's service reliability capabilities.
+
+### Implementation Details:
+
+The script performs the following functions:
+- **Automated Health Checks**: Periodically monitors MongoDB container using `docker exec` and `mongosh ping`
+- **Self-Healing**: Automatically restarts the MongoDB container if health checks fail using `docker restart`
+- **Comprehensive Logging**: Logs all health check activities to `health_monitor.log` with timestamps
+- **Graceful Shutdown**: Handles SIGINT/SIGTERM signals for clean script termination
+
+### Usage:
+
 ```bash
-# Pull and run the latest image directly
-docker run -d -p 3000:3000 --name taskify ibs000/task-manager-app:latest
+# Run the health monitor in background
+./health_monitor.sh &
+
+# Or run with explicit logging
+nohup ./health_monitor.sh > monitor_output.log 2>&1 &
+
+# View real-time logs
+tail -f health_monitor.log
+````
+
+### Creative Value:
+
+This enhancement showcases Docker's operational capabilities beyond basic containerization:
+
+- **Service Discovery**: Script uses Docker API to inspect container states
+- **Container Orchestration**: Demonstrates manual container lifecycle management
+- **Monitoring Integration**: Shows how external scripts can monitor containerized services
+- **Production Readiness**: Simulates real-world monitoring patterns used in production environmentsnd run the latest image directly
+  docker run -d -p 3000:3000 --name taskify ibs000/task-manager-app:latest
 
 # Access the application at http://localhost:3000
-```
+
+````
 
 ### Option 2: Clone and Run Locally
 
@@ -25,7 +58,7 @@ pnpm install
 
 # Run development server
 pnpm dev
-```
+````
 
 ---
 
@@ -453,32 +486,36 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📸 Application Screenshots & Logs
 
-### Running Application Logs
+### Screenshots Demonstrating Application Functionality
 
-```bash
-# Container status verification
-$ docker ps
-CONTAINER ID   IMAGE                     COMMAND                  CREATED         STATUS                   PORTS                      NAMES
-a1b2c3d4e5f6   task-manager-app         "pnpm start"             2 minutes ago   Up 2 minutes (healthy)   0.0.0.0:3000->3000/tcp     app-container
-b2c3d4e5f6a1   mongo:7.0                "docker-entrypoint.s…"   3 minutes ago   Up 3 minutes             0.0.0.0:27017->27017/tcp   mongo-container
+![Docker Containers Running](screenshots/docker-ps-containers.png)
+_Two microservices running: Next.js application and MongoDB database_
 
-# Application logs showing successful startup
-$ docker logs app-container
-> task-manager@1.0.0 start /app
-> next start
+![Application Dashboard](screenshots/ui.png)
+_Modern task manager interface with AI-powered features_
 
-- ready started server on 0.0.0.0:3000, url: http://localhost:3000
-- info  - Loaded env from .env.local
-- info  - MongoDB connected successfully
-- info  - AI service initialized with Gemini API
+![Application Startup Logs](screenshots/app-logs-startup.png)
+_Successful container startup and MongoDB connection_
 
-# MongoDB connection verification
-$ docker logs mongo-container
-2024-06-20T10:30:15.123+0000 I NETWORK  [listener] Listening on 0.0.0.0:27017
-2024-06-20T10:30:15.456+0000 I NETWORK  [listener] Connection accepted from app-container
-```
+![API Testing](screenshots/api-testing-curl.png)
+_REST API endpoints working correctly_
 
-### Health Check Status
+![Health Monitor](screenshots/health-monitor-logs.png)
+_Custom health monitoring script in action_
+
+![Docker Hub Deployment](screenshots/docker-hub-push.png)
+_Successful deployment to Docker Hub registry_
+
+![Network and Volume Setup](screenshots/network-volume-verification.png)
+_Custom Docker network and persistent volume configuration_
+
+### Docker Hub Repository
+
+**Application Images Available:**
+
+- **Docker Hub**: [https://hub.docker.com/r/ibs000/task-manager-app](https://hub.docker.com/r/ibs000/task-manager-app)
+- **Image**: `ibs000/task-manager-app:v1`
+- **Latest**: `ibs000/task-manager-app:latest`
 
 ```bash
 # Health status verification
