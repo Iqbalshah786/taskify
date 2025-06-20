@@ -261,8 +261,6 @@ docker run -d \
 
 ## Task 4: Deployment to Docker Hub
 
-Tag, login, and push your images to Docker Hub:
-
 ```bash
 # Tag images for Docker Hub
 docker tag task-manager-app ibs000/task-manager-app:v1
