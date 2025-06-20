@@ -6,45 +6,12 @@ A comprehensive task management application built with Next.js 15, TypeScript, a
 
 ### Option 1: Run from Docker Hub (Recommended)
 
-````bash
-# Pul## Task 5: Creative Enhancement
-
-**Health Monitoring System**: A custom health-monitor script (`health_monitor.sh`) that demonstrates Docker's service reliability capabilities.
-
-### Implementation Details:
-
-The script performs the following functions:
-- **Automated Health Checks**: Periodically monitors MongoDB container using `docker exec` and `mongosh ping`
-- **Self-Healing**: Automatically restarts the MongoDB container if health checks fail using `docker restart`
-- **Comprehensive Logging**: Logs all health check activities to `health_monitor.log` with timestamps
-- **Graceful Shutdown**: Handles SIGINT/SIGTERM signals for clean script termination
-
-### Usage:
-
 ```bash
-# Run the health monitor in background
-./health_monitor.sh &
-
-# Or run with explicit logging
-nohup ./health_monitor.sh > monitor_output.log 2>&1 &
-
-# View real-time logs
-tail -f health_monitor.log
-````
-
-### Creative Value:
-
-This enhancement showcases Docker's operational capabilities beyond basic containerization:
-
-- **Service Discovery**: Script uses Docker API to inspect container states
-- **Container Orchestration**: Demonstrates manual container lifecycle management
-- **Monitoring Integration**: Shows how external scripts can monitor containerized services
-- **Production Readiness**: Simulates real-world monitoring patterns used in production environmentsnd run the latest image directly
-  docker run -d -p 3000:3000 --name taskify ibs000/task-manager-app:latest
+# Pull and run the latest image directly
+docker run -d -p 3000:3000 --name taskify ibs000/task-manager-app:latest
 
 # Access the application at http://localhost:3000
-
-````
+```
 
 ### Option 2: Clone and Run Locally
 
@@ -58,7 +25,7 @@ pnpm install
 
 # Run development server
 pnpm dev
-````
+```
 
 ---
 
@@ -255,7 +222,7 @@ Before running this application, make sure you have:
 
    The application will be available at `http://localhost:3000`.
 
-## Task 3: Manual Docker Commands (Assignment Requirement)
+## Task 3: Manual Docker Commands
 
 Follow these steps to run the application using manual Docker commands without Docker Compose:
 
@@ -306,7 +273,38 @@ docker push ibs000/task-manager-app:v1
 
 ## Task 5: Creative Enhancement
 
-A custom health-monitor script (`health_monitor.sh`) periodically checks the MongoDB container using `docker inspect` and automatically restarts it if unhealthy. This demonstrates Docker’s healthcheck and restart capabilities to maintain service reliability.
+**Health Monitoring System**: A custom health-monitor script (`health_monitor.sh`) that demonstrates Docker's service reliability capabilities.
+
+### Implementation Details:
+
+The script performs the following functions:
+
+- **Automated Health Checks**: Periodically monitors MongoDB container using `docker exec` and `mongosh ping`
+- **Self-Healing**: Automatically restarts the MongoDB container if health checks fail using `docker restart`
+- **Comprehensive Logging**: Logs all health check activities to `health_monitor.log` with timestamps
+- **Graceful Shutdown**: Handles SIGINT/SIGTERM signals for clean script termination
+
+### Usage:
+
+```bash
+# Run the health monitor in background
+./health_monitor.sh &
+
+# Or run with explicit logging
+nohup ./health_monitor.sh > monitor_output.log 2>&1 &
+
+# View real-time logs
+tail -f health_monitor.log
+```
+
+### Creative Value:
+
+This enhancement showcases Docker's operational capabilities beyond basic containerization:
+
+- **Service Discovery**: Script uses Docker API to inspect container states
+- **Container Orchestration**: Demonstrates manual container lifecycle management
+- **Monitoring Integration**: Shows how external scripts can monitor containerized services
+- **Production Readiness**: Simulates real-world monitoring patterns used in production environments
 
 ## Task 6: Reflection
 
@@ -356,6 +354,15 @@ See `reflection.txt` for a 200–250 word reflection on design inspiration, chal
 ├── tailwind.config.ts
 ├── eslint.config.mjs
 ├── postcss.config.mjs
+├── health_monitor.sh
+├── screenshots/
+│   ├── api-testing-curl.png
+│   ├── app-logs-startup.png
+│   ├── docker-hub-push.png
+│   ├── docker-ps-containers.png
+│   ├── health-monitor-logs.png
+│   ├── network-volume-verification.png
+│   └── ui.png
 ├── db/
 │   └── Dockerfile
 ├── public/
@@ -445,6 +452,39 @@ pnpm lint
 pnpm type-check
 ```
 
+## 📸 Application Screenshots & Logs
+
+### Screenshots Demonstrating Application Functionality
+
+![Docker Containers Running](screenshots/docker-ps-containers.png)
+_Two microservices running: Next.js application and MongoDB database_
+
+![Application Dashboard](screenshots/ui.png)
+_Modern task manager interface with AI-powered features_
+
+![Application Startup Logs](screenshots/app-logs-startup.png)
+_Successful container startup and MongoDB connection_
+
+![API Testing](screenshots/api-testing-curl.png)
+_REST API endpoints working correctly_
+
+![Health Monitor](screenshots/health-monitor-logs.png)
+_Custom health monitoring script in action_
+
+![Docker Hub Deployment](screenshots/docker-hub-push.png)
+_Successful deployment to Docker Hub registry_
+
+![Network and Volume Setup](screenshots/network-volume-verification.png)
+_Custom Docker network and persistent volume configuration_
+
+### Docker Hub Repository
+
+**Application Images Available:**
+
+- **Docker Hub**: [https://hub.docker.com/r/ibs000/task-manager-app](https://hub.docker.com/r/ibs000/task-manager-app)
+- **Image**: `ibs000/task-manager-app:v1`
+- **Latest**: `ibs000/task-manager-app:latest`
+
 ## Contributing
 
 1. Fork the repository
@@ -483,61 +523,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - **GitHub Repository**: [https://github.com/Iqbalshah786/taskify](https://github.com/Iqbalshah786/taskify)
 - **Docker Hub**: [https://hub.docker.com/r/ibs000/task-manager-app](https://hub.docker.com/r/ibs000/task-manager-app)
 - **Live Demo**: Run `docker run -d -p 3000:3000 ibs000/task-manager-app:latest` and visit `http://localhost:3000`
-
-## 📸 Application Screenshots & Logs
-
-### Screenshots Demonstrating Application Functionality
-
-![Docker Containers Running](screenshots/docker-ps-containers.png)
-_Two microservices running: Next.js application and MongoDB database_
-
-![Application Dashboard](screenshots/ui.png)
-_Modern task manager interface with AI-powered features_
-
-![Application Startup Logs](screenshots/app-logs-startup.png)
-_Successful container startup and MongoDB connection_
-
-![API Testing](screenshots/api-testing-curl.png)
-_REST API endpoints working correctly_
-
-![Health Monitor](screenshots/health-monitor-logs.png)
-_Custom health monitoring script in action_
-
-![Docker Hub Deployment](screenshots/docker-hub-push.png)
-_Successful deployment to Docker Hub registry_
-
-![Network and Volume Setup](screenshots/network-volume-verification.png)
-_Custom Docker network and persistent volume configuration_
-
-### Docker Hub Repository
-
-**Application Images Available:**
-
-- **Docker Hub**: [https://hub.docker.com/r/ibs000/task-manager-app](https://hub.docker.com/r/ibs000/task-manager-app)
-- **Image**: `ibs000/task-manager-app:v1`
-- **Latest**: `ibs000/task-manager-app:latest`
-
-```bash
-# Health status verification
-$ docker inspect app-container --format='{{.State.Health.Status}}'
-healthy
-
-$ docker inspect mongo-container --format='{{.State.Health.Status}}'
-healthy
-```
-
-### API Testing
-
-```bash
-# Test API endpoints
-$ curl http://localhost:3000/api/todos
-{"todos":[],"total":0}
-
-$ curl -X POST http://localhost:3000/api/todos \
-  -H "Content-Type: application/json" \
-  -d '{"title":"Test Task","description":"Docker assignment task","category":"work"}'
-{"success":true,"id":"507f1f77bcf86cd799439011"}
-```
 
 ---
 
